@@ -51,3 +51,56 @@ func gcd(a: Int, _ b: Int) -> Int {
 // 測試碼
 let d = gcd(789, 123)           // 3
 print(d)
+
+
+
+/**************************************************
+ *
+ *    二元搜尋 (Binary Search)
+ *
+ **************************************************/
+
+// 在已經排序好的陣列中搜尋
+
+func binarySearch(
+
+    key: Int,                       // 要搜尋的對象
+    _ array: [Int],                 // 已排序好的陣列（遞增數列）
+    left: Int = 0,                  // 搜尋範圍
+    var right: Int = -1             // 預設範圍：0 ~ array.count - 1
+    
+) -> Bool {
+    
+    // 第一次進入搜尋程序，先設定右邊界
+    if right == -1 { right = array.count - 1 }
+    
+    // 先找出中間項，並計算差異
+    let index = (left + right)/2
+    let m = array[index]
+    
+    // 
+    print("搜尋範圍：\(array[left...right])")
+    
+    // 如果一致，則傳回 true
+    if key == m { return true }
+    
+    // 如果不一致，而且也沒有項目可以搜尋了，則傳回 false
+    if left == right { return false }
+    
+    // 還有項目可以搜尋，則搜尋適當的一半陣列
+    if m < key {
+        return binarySearch(key, array, left: index + 1, right: right)
+    } else {
+        return binarySearch(key, array, left: left, right: index - 1)
+    }
+    
+}
+
+// 測試碼
+let ans = binarySearch(7, [1,3, 4, 7, 8, 10])
+
+// 搜尋範圍：[1, 3, 4, 7, 8, 10]
+// 搜尋範圍：[7, 8, 10]
+// 搜尋範圍：[7]
+
+print(ans)      // true
